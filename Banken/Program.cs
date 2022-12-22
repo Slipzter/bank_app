@@ -543,7 +543,7 @@ namespace Banken
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("\nTransfer complete.\n");
                                 Console.ResetColor();
-                                Console.WriteLine("Your new account balances are:\n\n{0}: {1} {2}\n{3} {4}\nand\n{5}: {6} {7}\n{8} {9}\n", 
+                                Console.WriteLine("Your new account balances are:\n\n{0}: {1} {2}, {3} {4}\nand\n{5}: {6} {7}, {8} {9}\n", 
                                     fromaccount.ElementAt(0).Key, chosenaccounts[fromaccount.ElementAt(0).Key].crowns, currency, chosenaccounts[fromaccount.ElementAt(0).Key].pennies, currency2, 
                                     toaccount.ElementAt(0).Key, chosenaccounts[toaccount.ElementAt(0).Key].crowns, currency, chosenaccounts[toaccount.ElementAt(0).Key].pennies, currency2);
 
@@ -579,9 +579,9 @@ namespace Banken
                         }
                         else
                         {
-                            Console.Write("\nSorry, enter amount" + currency + "to transfer: ");
+                            Console.Write("\nSorry, enter amount " + currency + " to transfer: ");
                             crownsAmount = Console.ReadLine();
-                            Console.Write("\nEnter amount" + currency2 + "to transfer: ");
+                            Console.Write("\nEnter amount " + currency2 + " to transfer: ");
                             penniesAmount = Console.ReadLine();
                         }
                     }
