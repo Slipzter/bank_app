@@ -87,6 +87,9 @@ namespace Banken
             mainMenu();
 
 
+            // Jag har lagt ganska många funktioner inuti andra funktioner och vet att det inte är en superbra idé, 
+            // men jag fick allt att fungera som jag hade tänkt och lät det vara kvar. 
+            // Ska försöka tänka på det nästa gång!
 
 
             //Visar registrerade konton och inloggningsalternativ
@@ -585,7 +588,6 @@ namespace Banken
                             penniesAmount = Console.ReadLine();
                         }
                     }
-                    chosenaccounts.Clear();
                 }
 
                 //Uttag
