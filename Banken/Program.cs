@@ -19,7 +19,7 @@ namespace Banken
             string userName = "";
             string passWord = "";
 
-            //Alla kontons namn och saldo
+            // Alla kontons namn och saldo
             var zeusAccounts = new Dictionary<string, (int crowns, int pennies)>
             {
                 { "Main account", (1352, 52) },
@@ -56,14 +56,14 @@ namespace Banken
                 { "Assets account", (287, 90) }
             };
 
-            //Valuta
+            // Valuta
             string currency = "Kr";
             string currency2 = "Ören";
 
-            //Kollar om man skrivit in rätt kontonamn
+            // Kollar om man skrivit in rätt kontonamn
             bool wrongAccount = true;
 
-            //Lagrar alla konton
+            // Lagrar alla konton
             string[] defaultAccounts = new string[]
             {
                 "Zeus",
@@ -73,7 +73,7 @@ namespace Banken
                 "Athena"
             };
 
-            //Sparar lösenord (oviktig)
+            // Sparar lösenord
             List<string> savedPasswords = new List<string>
             {
                 "",
@@ -92,7 +92,7 @@ namespace Banken
             // Ska försöka tänka på det nästa gång!
 
 
-            //Visar registrerade konton och inloggningsalternativ
+            // Visar registrerade konton och inloggningsalternativ
             Tuple<string, string> selectUser(string username, string password)
             {
                 Console.WriteLine("Welcome to Chacademy bank services!\n");
@@ -209,7 +209,7 @@ namespace Banken
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write("\nYour PIN code for this account is: " + passWord + ".");
                     Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write(" Don't forget your password.\n\n");
+                    Console.Write(" Don't forget your PIN code.\n\n");
                     Console.ForegroundColor = ConsoleColor.Cyan;
                     Console.WriteLine("- MAIN MENU -");
                     Console.ResetColor();
@@ -399,7 +399,7 @@ namespace Banken
                         chosenAccounts = athenaAccounts;
                     }
 
-                    //Visar alla individuella konton och frågar användaren vilket konto man ska överföra från
+                    //Visar alla individuella konton och frågar användaren vilket konto att överföra från
                     bool tMenu = true;
                     while (tMenu)
                     {
@@ -452,7 +452,7 @@ namespace Banken
                     transferTo(fromAccount, chosenaccounts, username, input);
                 }
                 
-                //Kollar om man skrivit in rätt kontonamn att överföra TILL
+                // Kollar om man skrivit in rätt kontonamn att överföra TILL
                 void transferTo(Dictionary<string, (int crowns, int pennies)> fromaccount, Dictionary<string, (int crowns, int pennies)> chosenaccounts, string username, string account)
                 {
                     Dictionary<string, (int crowns, int pennies)> toAccount = new Dictionary<string, (int, int)>();
@@ -476,7 +476,7 @@ namespace Banken
                         {
                             for (accountSelector = 0; accountSelector < chosenaccounts.Count; accountSelector++)
                             {
-                                //Kollar om man skrivit in rätt kontonamn att överföra TILL andra kontot
+                                // Kollar om man skrivit in rätt kontonamn att överföra TILL andra kontot
                                 if (string.Equals(input, chosenaccounts.ElementAt(accountSelector).Key, StringComparison.CurrentCultureIgnoreCase))
                                 {
                                     toAccount.Add(chosenaccounts.ElementAt(accountSelector).Key, chosenaccounts.ElementAt(accountSelector).Value);
@@ -590,51 +590,56 @@ namespace Banken
                     }
                 }
 
-                //Uttag
-                //void withdraw(string username)
-                //{
-                //    Console.Clear();
+                // Uttag
+                void withdraw(string username)
+                {
+                    Console.Clear();
 
-                //    Dictionary<string, float> chosenAccounts = new Dictionary<string, float>();
+                    Dictionary<string, (int crowns, int pennies)> chosenAccounts = new Dictionary<string, (int, int)>();
 
-                //    if (username == "Zeus")
-                //    {
-                //        chosenAccounts.Add(zeusAccounts[0], zeusBalance[0]);
-                //        chosenAccounts.Add(zeusAccounts[1], zeusBalance[1]);
-                //    }
-                //    else if (username == "Aphrodite")
-                //    {
-                //        chosenAccounts.Add(athenaAccounts[0], athenaBalance[0]);
-                //    }
-                //    else if (username == "Poseidon")
-                //    {
-                //        chosenAccounts.Add(poseidonAccounts[0], poseidonBalance[0]);
-                //        chosenAccounts.Add(poseidonAccounts[1], poseidonBalance[1]);
-                //    }
-                //    else if (username == "Hermes")
-                //    {
-                //        chosenAccounts.Add(hermesAccounts[0], hermesBalance[0]);
-                //        chosenAccounts.Add(hermesAccounts[1], hermesBalance[1]);
-                //    }
-                //    else if (username == "Athena")
-                //    {
-                //        chosenAccounts.Add(athenaAccounts[0], athenaBalance[0]);
-                //    }
+                    // Sparar lösenord som vi sen ber användaren mata in
+                    string currentPassword;
 
-                //    //Visar alla individuella konton och frågar användaren vilket konto man ska överföra från
-                //    bool tMenu = true;
-                //    while (tMenu)
-                //    {
-                //        Console.WriteLine("Your accounts: \n");
+                    if (username == "Zeus")
+                    {
+                        chosenAccounts = zeusAccounts;
+                        currentPassword = savedPasswords[0];
+                    }
+                    else if (username == "Aphrodite")
+                    {
+                        chosenAccounts = aphroditeAccounts;
+                        currentPassword = savedPasswords[1];
+                    }
+                    else if (username == "Poseidon")
+                    {
+                        chosenAccounts = poseidonAccounts;
+                        currentPassword = savedPasswords[2];
+                    }
+                    else if (username == "Hermes")
+                    {
+                        chosenAccounts = hermesAccounts;
+                        currentPassword = savedPasswords[3];
+                    }
+                    else if (username == "Athena")
+                    {
+                        chosenAccounts = athenaAccounts;
+                        currentPassword = savedPasswords[4];
+                    }
 
-                //        foreach (var accountInfo in chosenAccounts)
-                //        {
-                //            Console.WriteLine("{0} balance: {1}", accountInfo.Key, accountInfo.Value);
-                //        }
-                //        withdrawFrom(chosenAccounts, username);
-                //        break;
-                //    }
-                //}
+                    //Visar alla individuella konton och frågar användaren vilket konto att ta ut pengar från
+                    bool tMenu = true;
+                    while (tMenu)
+                    {
+                        Console.WriteLine("Your accounts: \n");
+
+                        foreach (var accountInfo in chosenAccounts)
+                        {
+                            Console.WriteLine("{0} balance: {1} {2}, {3} {4}", accountInfo.Key, accountInfo.Value.crowns, currency, accountInfo.Value.pennies, currency2);
+                        }
+                        //withdrawFrom(chosenAccounts, username);
+                        break;
+                    }
+                }
 
                 ////Kollar om man skrivit in rätt konto att överföra FRÅN
                 //void withdrawFrom(Dictionary<string, float> chosenaccounts, string username)
@@ -743,14 +748,15 @@ namespace Banken
                 //    chosenaccounts.Clear();
                 //}
 
-                //Stäng programmet
+                // Stänger programmet
                 void exitProgram()
                 {
                     Console.WriteLine("\nAre you sure?\n");
-                    Console.Write("Enter 'yes' to confirm, or 'no' to cancel: ");
-                    string exit = Console.ReadLine();
-                    if (exit == "yes")
+                    Console.Write("Enter 'yes' to confirm, or any character to cancel: ");
+                    string input = Console.ReadLine();
+                    if (string.Equals(input, "yes", StringComparison.CurrentCultureIgnoreCase))
                     {
+                        // Nedräkning tills programmet stängs
                         Console.WriteLine("\nExiting program in: ");
                         Console.WriteLine("3...");
                         Thread.Sleep(1000);
