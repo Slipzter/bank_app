@@ -87,9 +87,10 @@ namespace Banken
             mainMenu();
 
 
-            // Jag har lagt ganska många funktioner inuti andra funktioner och vet att det inte är en superbra idé, 
-            // men jag fick allt att fungera som jag hade tänkt och lät det vara kvar. 
-            // Ska försöka tänka på det nästa gång!
+            // Jag har lagt ganska många funktioner inuti andra funktioner och vet att det inte är en superbra idé.
+            // Jag har också upprepat en del kod som jag kunde ha skrivit i fler mindre funktioner så de kunde återanvändas.
+            // Men jag valde att behålla saker och ting som det är nu eftersom programmet i allmänt fungerar som planerat.
+            // Ska tänka på dessa saker nästa gång!
 
 
             // Visar registrerade konton och inloggningsalternativ
@@ -105,7 +106,7 @@ namespace Banken
                 userName = Console.ReadLine();
                 while (wrongAccount == true)
                 {
-                    //Kollar om man skrivit in giltigt kontonamn
+                    // Kollar om man skrivit in giltigt kontonamn
                     if (!string.Equals(userName, defaultAccounts[0], StringComparison.CurrentCultureIgnoreCase)
                         && !string.Equals(userName, defaultAccounts[1], StringComparison.CurrentCultureIgnoreCase)
                         && !string.Equals(userName, defaultAccounts[2], StringComparison.CurrentCultureIgnoreCase)
@@ -120,7 +121,7 @@ namespace Banken
                     }
                     else
                     {
-                        //Återställer case insensitive input till det ursprungliga kontonamnet
+                        // Återställer case insensitive input till det ursprungliga kontonamnet
                         if (string.Equals(userName, defaultAccounts[0], StringComparison.CurrentCultureIgnoreCase))
                         {
                             userName = "Zeus";
@@ -152,7 +153,7 @@ namespace Banken
                         Console.Write("\nPlease set your new PIN code for this account: ");
                         passWord = Console.ReadLine();
 
-                        //Sparar lösenordet från input i en lista
+                        // Sparar lösenordet från input i en lista
                         if (userName == "Zeus")
                         {
                             savedPasswords[0] = passWord;
@@ -179,11 +180,12 @@ namespace Banken
                 return new Tuple<string, string>(userName, passWord);
             }
 
+            // Huvudmeny
             void mainMenu()
             {
                 Console.Clear();
 
-                //Menyval
+                // Menyval
                 List<string> _mainMenu = new List<string>()
                 {
                     "1. Your accounts and account balance",
@@ -193,13 +195,13 @@ namespace Banken
                     "5. Exit program"
                 };
 
-                //Avgör vilket menyval man är på
+                // Avgör vilket menyval man är på
                 bool[] choices = { true, false, false, false, false };
 
-                //Räknare
+                // Räknare
                 int x = 0;
 
-                //Loop körs för att behålla menyn på skärmen
+                // Loop körs för att behålla menyn på skärmen
                 bool showMenu = true;
                 while (showMenu)
                 {
@@ -259,7 +261,7 @@ namespace Banken
 
                     ConsoleKeyInfo key = Console.ReadKey();
 
-                    //Navigering med 'upp' och 'ned' tangenter
+                    // Navigering med 'upp' och 'ned' tangenter
                     if (key.Key == ConsoleKey.DownArrow)
                     {
                         if (x == 4)
@@ -293,7 +295,7 @@ namespace Banken
 
                     }
 
-                    //Välj menyval med 'enter'
+                    // Användaren väljer menyval med 'enter'
                     else if (key.Key == ConsoleKey.Enter)
                     {
                         if (x == 0)
@@ -310,7 +312,7 @@ namespace Banken
                         }
                         else if (x == 2)
                         {
-                            //withdraw(userName);
+                            withdraw(userName);
                             Console.ReadKey();
                         }
                         else if (x == 3)
@@ -327,7 +329,7 @@ namespace Banken
                     Console.Clear();
                 }
 
-                //Visar saldo
+                // Visar saldo
                 string acountBalance(string username)
                 {
                     if (username == "Zeus")
@@ -367,11 +369,11 @@ namespace Banken
                     }
                     else
                     {
-                        return "Error, account not found.";
+                        return "Error, accounts not found.";
                     }
                 }
 
-                //Överföring mellan konton
+                // Överföring mellan konton
                 void transactions(string username)
                 {
                     Console.Clear();
@@ -399,7 +401,7 @@ namespace Banken
                         chosenAccounts = athenaAccounts;
                     }
 
-                    //Visar alla individuella konton och frågar användaren vilket konto att överföra från
+                    // Visar alla individuella konton och frågar användaren vilket konto att överföra från
                     bool tMenu = true;
                     while (tMenu)
                     {
@@ -414,14 +416,14 @@ namespace Banken
                     }
                 }
 
-                //Kollar om man skrivit in rätt konto att överföra FRÅN
+                // Kollar om man skrivit in rätt konto att överföra FRÅN
                 void transferFrom(Dictionary<string, (int crowns, int pennies)> chosenaccounts, string username)
                 {
                     Dictionary<string, (int crowns, int pennies)> fromAccount = new Dictionary<string, (int, int)>();
 
                     int accountSelector = 0;
 
-                    Console.Write("\nWhat account would you like to transfer from?: ");
+                    Console.WriteLine("\nWhat account would you like to transfer from?");
                     string input = Console.ReadLine(); 
 
                     bool tIncorrect = true;
@@ -430,10 +432,10 @@ namespace Banken
                     {
                         for (accountSelector = 0; accountSelector < chosenaccounts.Count; accountSelector++)
                         {
-                            //Kollar om man skrivit in rätt kontonamn att överföra FRÅN första kontot
+                            // Kollar om man skrivit in rätt kontonamn att överföra FRÅN första kontot
                             if (string.Equals(input, chosenaccounts.ElementAt(accountSelector).Key, StringComparison.CurrentCultureIgnoreCase))
                             {
-                                //Återställer input till rättstavat namn
+                                // Återställer input till rättstavat namn
                                 input = chosenaccounts.ElementAt(accountSelector).Key;
                                 fromAccount.Add(chosenaccounts.ElementAt(accountSelector).Key, chosenaccounts.ElementAt(accountSelector).Value);
                                 tIncorrect = false;
@@ -496,9 +498,10 @@ namespace Banken
                     }  
                 }
 
+                // Överföring mellan två konton genomförs
                 void transfer(Dictionary<string, (int crowns, int pennies)> toaccount, Dictionary<string, (int crowns, int pennies)> fromaccount, Dictionary<string, (int crowns, int pennies)> chosenaccounts, string username)
                 {
-                    Console.WriteLine("\nYou chose to transfer from:\n{0} (balance: {1}) to {2} (balance: {3})\n", fromaccount.ElementAt(0).Key, fromaccount.ElementAt(0).Value, toaccount.ElementAt(0).Key, toaccount.ElementAt(0).Value);
+                    Console.WriteLine("\nYou chose to transfer from:\n{0} balance: {1} to {2} balance: {3}\n", fromaccount.ElementAt(0).Key, fromaccount.ElementAt(0).Value, toaccount.ElementAt(0).Key, toaccount.ElementAt(0).Value);
                     Console.Write("\nEnter amount " + currency + " to transfer: ");
                     string crownsAmount = Console.ReadLine();
                     Console.Write("\nEnter amount " + currency2 + " to transfer: ");
@@ -508,13 +511,9 @@ namespace Banken
                     {
                         if (int.TryParse(crownsAmount, out int crowns) && int.TryParse(penniesAmount, out int pennies))
                         {
+                            // Kollar om man har tillräckligt med pengar på kontot man överför FRÅN
                             if (crowns > fromaccount.ElementAt(0).Value.crowns && pennies > fromaccount.ElementAt(0).Value.pennies)
                             {
-                                // user input     -   valute to store
-                                // 200                  20000
-                                // 200.5                20050
-                                // 200.05               20005
-                                // 200.200              error eller 20020
                                 Console.WriteLine("Sorry you don't have enough money on this account\n");
                                 Console.Write("\nEnter amount" + currency + "to transfer: ");
                                 crownsAmount = Console.ReadLine();
@@ -542,6 +541,7 @@ namespace Banken
                                 chosenaccounts[fromaccount.ElementAt(0).Key] = (fromCrowns, fromPennies);
                                 chosenaccounts[toaccount.ElementAt(0).Key] = (toCrowns, toPennies);
 
+                                // Godkänd överföring, nytt saldo visas för användaren
                                 Console.Clear();
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine("\nTransfer complete.\n");
@@ -597,8 +597,8 @@ namespace Banken
 
                     Dictionary<string, (int crowns, int pennies)> chosenAccounts = new Dictionary<string, (int, int)>();
 
-                    // Sparar lösenord som vi sen ber användaren mata in
-                    string currentPassword;
+                    // Sparar lösenord
+                    string currentPassword = "";
 
                     if (username == "Zeus")
                     {
@@ -626,7 +626,7 @@ namespace Banken
                         currentPassword = savedPasswords[4];
                     }
 
-                    //Visar alla individuella konton och frågar användaren vilket konto att ta ut pengar från
+                    // Visar alla individuella konton och frågar användaren vilket konto att ta ut pengar från
                     bool tMenu = true;
                     while (tMenu)
                     {
@@ -636,117 +636,129 @@ namespace Banken
                         {
                             Console.WriteLine("{0} balance: {1} {2}, {3} {4}", accountInfo.Key, accountInfo.Value.crowns, currency, accountInfo.Value.pennies, currency2);
                         }
-                        //withdrawFrom(chosenAccounts, username);
+                        withdrawFrom(chosenAccounts, username, currentPassword);
                         break;
                     }
                 }
 
-                ////Kollar om man skrivit in rätt konto att överföra FRÅN
-                //void withdrawFrom(Dictionary<string, float> chosenaccounts, string username)
-                //{
-                //    Console.Write("\nWhat account would you like to deposit from?: ");
-                //    string fromAccount = Console.ReadLine();
-                //    bool fromFirst = true;
-                //    bool tIncorrect = true;
-                //    while (tIncorrect)
-                //    {
-                //        //Kollar om man skrivit in rätt kontonamn att överföra FRÅN första kontot
-                //        if (string.Equals(fromAccount, chosenaccounts.ElementAt(0).Key, StringComparison.CurrentCultureIgnoreCase))
-                //        {
-                //            //Återställer input till rättstavat namn
-                //            fromAccount = chosenaccounts.ElementAt(0).Key;
-                //            tIncorrect = false;
-                //            break;
-                //        }
-                //        else if (string.Equals(fromAccount, chosenaccounts.ElementAt(1).Key, StringComparison.CurrentCultureIgnoreCase))
-                //        {
-                //            fromAccount = chosenaccounts.ElementAt(1).Key;
-                //            fromFirst = false;
-                //            tIncorrect = false;
-                //            break;
-                //        }
-                //        else
-                //        {
-                //            Console.Write("Sorry, please enter one of your registered accounts to transfer from: ");
-                //            fromAccount = Console.ReadLine();
-                //        }
-                //    }
-                //    Console.WriteLine("\nYou selected withdrawal from: " + fromAccount + "\n");
-                //    withdrawal(fromAccount, chosenaccounts, username, fromFirst);
-                //}
+                //Kollar om man skrivit in rätt konto att överföra FRÅN
+                void withdrawFrom(Dictionary<string, (int crowns, int pennies)> chosenaccounts, string username, string password)
+                {
+                    Dictionary<string, (int crowns, int pennies)> fromAccount = new Dictionary<string, (int, int)>();
 
-                //void withdrawal(string fromaccount, Dictionary<string, float> chosenaccounts, string username, bool fromfirst)
-                //{
-                //    float fromBalance = 0;
-                //    string chosenAccount = "";
+                    int accountSelector = 0;
 
-                //    if (fromfirst)
-                //    {
-                //        fromBalance = chosenaccounts.ElementAt(0).Value;
-                //        chosenAccount = chosenaccounts.ElementAt(0).Key;
-                //    }
-                //    else if (!fromfirst)
-                //    {
-                //        fromBalance = chosenaccounts.ElementAt(1).Value;
-                //        chosenAccount = chosenaccounts.ElementAt(1).Key;
-                //    }
+                    Console.Write("\nWhat account would you like to withdraw from?: ");
+                    string input = Console.ReadLine(); 
 
-                //    Console.Write("\nEnter amount to transfer: ");
-                //    string transferAmount = Console.ReadLine();
-                //    bool notNumber = true;
-                //    while (notNumber)
-                //    {
-                //        if (float.TryParse(transferAmount, out float amount))
-                //        {
-                //            if (amount > fromBalance)
-                //            {
-                //                Console.WriteLine("Sorry you don't have enough money on this account\n");
-                //                Console.Write("Try again: ");
-                //                transferAmount = Console.ReadLine();
-                //            }
-                //            else
-                //            {
-                //                chosenaccounts[fromaccount] -= amount;
+                    bool tIncorrect = true;
+                    bool tCorrect = false;
+                    while (tIncorrect)
+                    {
+                        for (accountSelector = 0; accountSelector < chosenaccounts.Count; accountSelector++)
+                        {
+                            // Kollar om man skrivit in rätt kontonamn att överföra FRÅN första kontot
+                            if (string.Equals(input, chosenaccounts.ElementAt(accountSelector).Key, StringComparison.CurrentCultureIgnoreCase))
+                            {
+                                // Återställer input till rättstavat namn
+                                input = chosenaccounts.ElementAt(accountSelector).Key;
+                                fromAccount.Add(chosenaccounts.ElementAt(accountSelector).Key, chosenaccounts.ElementAt(accountSelector).Value);
+                                tIncorrect = false;
+                                tCorrect = true;
+                                break;
+                            }
+                        }
+                        if (tCorrect == false)
+                        {
+                            Console.Write("Sorry, please enter one of your registered accounts to withdraw from: ");
+                            accountSelector = 0;
+                            input = Console.ReadLine();
+                        }
+                    }
+                    Console.WriteLine("\nYou selected withdrawal from: " + fromAccount.ElementAt(0).Key + "\n");
+                    withdrawal(fromAccount, chosenaccounts, username, input, password);
+                }
 
-                //                Console.Clear();
-                //                Console.ForegroundColor = ConsoleColor.Green;
-                //                Console.WriteLine("\nWithdrawal complete.\n");
-                //                Console.ResetColor();
-                //                Console.WriteLine("Your new account balance is:\n\n{0}: {1}\n", chosenAccount, chosenaccounts[fromaccount]);
-                //                Console.WriteLine("Press any key to return to the main menu.");
-                //                if (username == "Zeus")
-                //                {
-                //                    if (fromfirst)
-                //                    {
-                //                        zeusBalance[0] = chosenaccounts.ElementAt(0).Value;
-                //                    }
-                //                    else if (!fromfirst)
-                //                    {
-                //                        zeusBalance[1] = chosenaccounts.ElementAt(1).Value;
-                //                    }
-                //                }
-                //                else if (username == "Poseidon")
-                //                {
-                //                    poseidonBalance[0] = chosenaccounts.ElementAt(0).Value;
-                //                    poseidonBalance[1] = chosenaccounts.ElementAt(1).Value;
-                //                }
-                //                else if (username == "Hermes")
-                //                {
-                //                    hermesBalance[0] = chosenaccounts.ElementAt(0).Value;
-                //                    hermesBalance[1] = chosenaccounts.ElementAt(1).Value;
-                //                }
-                //                notNumber = false;
-                //                break;
-                //            }
-                //        }
-                //        else
-                //        {
-                //            Console.Write("Sorry, please enter amount to transfer: ");
-                //            transferAmount = Console.ReadLine();
-                //        }
-                //    }
-                //    chosenaccounts.Clear();
-                //}
+                void withdrawal(Dictionary<string, (int crowns, int pennies)> fromaccount, Dictionary<string, (int crowns, int pennies)> chosenaccounts, string username, string account, string password)
+                {
+                    Console.WriteLine("\nYou chose to withdraw from:\n{0} balance: {1}\n", fromaccount.ElementAt(0).Key, fromaccount.ElementAt(0).Value);
+                    Console.Write("\nEnter amount " + currency + " to withdraw: ");
+                    string crownsAmount = Console.ReadLine();
+                    Console.Write("\nEnter amount " + currency2 + " to withdraw: ");
+                    string penniesAmount = Console.ReadLine();
+                    Console.Write("\nEnter your PIN code: ");
+                    string input = Console.ReadLine();
+                    bool notNumber = true;
+                    while (notNumber)
+                    {
+                        if (int.TryParse(crownsAmount, out int crowns) && int.TryParse(penniesAmount, out int pennies) && input == password)
+                        {
+                            // Kollar om man har tillräckligt med pengar på kontot man överför FRÅN
+                            if (crowns > fromaccount.ElementAt(0).Value.crowns && pennies > fromaccount.ElementAt(0).Value.pennies)
+                            {
+                                Console.WriteLine("Sorry you don't have enough money on this account\n");
+                                Console.Write("\nEnter amount" + currency + "to withdraw: ");
+                                crownsAmount = Console.ReadLine();
+                                Console.Write("\nEnter amount" + currency2 + "to withdraw: ");
+                                penniesAmount = Console.ReadLine();
+                            }
+                            else
+                            {
+                                int fromCrowns = fromaccount.ElementAt(0).Value.crowns;
+                                int fromPennies = fromaccount.ElementAt(0).Value.pennies;
+
+                                fromCrowns -= crowns;
+                                fromPennies -= pennies;
+
+                                chosenaccounts[fromaccount.ElementAt(0).Key] = (fromCrowns, fromPennies);
+
+                                // Godkänt uttag, nytt saldo visas för användaren
+                                Console.Clear();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("\nWithdrawal complete.\n");
+                                Console.ResetColor();
+                                Console.WriteLine("Your new account balance is:\n\n{0}: {1} {2}, {3} {4}\n",
+                                    fromaccount.ElementAt(0).Key, chosenaccounts[fromaccount.ElementAt(0).Key].crowns, currency, chosenaccounts[fromaccount.ElementAt(0).Key].pennies, currency2);
+
+                                Console.WriteLine("Press any key to return to the main menu.");
+                                if (username == "Zeus")
+                                {
+                                    zeusAccounts[fromaccount.ElementAt(0).Key] = chosenaccounts[fromaccount.ElementAt(0).Key];
+                                }
+                                else if (username == "Aphrodite")
+                                {
+                                    aphroditeAccounts[fromaccount.ElementAt(0).Key] = chosenaccounts[fromaccount.ElementAt(0).Key];
+                                }
+                                else if (username == "Poseidon")
+                                {
+                                    poseidonAccounts[fromaccount.ElementAt(0).Key] = chosenaccounts[fromaccount.ElementAt(0).Key];
+                                }
+                                else if (username == "Hermes")
+                                {
+                                    hermesAccounts[fromaccount.ElementAt(0).Key] = chosenaccounts[fromaccount.ElementAt(0).Key];
+                                }
+                                else if (username == "Athena")
+                                {
+                                    athenaAccounts[fromaccount.ElementAt(0).Key] = chosenaccounts[fromaccount.ElementAt(0).Key];
+                                }
+                                notNumber = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Sorry, you have not entered a valid amount or the PIN code you entered is incorrect.");
+                            Console.WriteLine("\nYou chose to withdraw from:\n{0} balance: {1}\n", fromaccount.ElementAt(0).Key, fromaccount.ElementAt(0).Value);
+                            Console.Write("\nEnter amount " + currency + " to withdraw: ");
+                            crownsAmount = Console.ReadLine();
+                            Console.Write("\nEnter amount " + currency2 + " to withdraw: ");
+                            penniesAmount = Console.ReadLine();
+                            Console.Write("\nEnter your PIN code: ");
+                            input = Console.ReadLine();
+                        }
+                    }
+                }
 
                 // Stänger programmet
                 void exitProgram()
