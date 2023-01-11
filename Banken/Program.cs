@@ -423,7 +423,7 @@ namespace Banken
 
                     int accountSelector = 0;
 
-                    Console.WriteLine("\nWhat account would you like to transfer from?");
+                    Console.Write("\nWhat account would you like to transfer from?: ");
                     string input = Console.ReadLine(); 
 
                     bool tIncorrect = true;
@@ -490,7 +490,7 @@ namespace Banken
                             }
                             if (tCorrect == false)
                             {
-                                Console.Write("Sorry, please enter one of your registered accounts for transfer: ");
+                                Console.Write("Sorry, please enter the FULL name of one of your registered accounts for transfer: ");
                                 accountSelector = 0;
                                 input = Console.ReadLine();
                             }
@@ -512,12 +512,12 @@ namespace Banken
                         if (int.TryParse(crownsAmount, out int crowns) && int.TryParse(penniesAmount, out int pennies))
                         {
                             // Kollar om man har tillräckligt med pengar på kontot man överför FRÅN
-                            if (crowns > fromaccount.ElementAt(0).Value.crowns && pennies > fromaccount.ElementAt(0).Value.pennies)
+                            if (crowns > fromaccount.ElementAt(0).Value.crowns || pennies > fromaccount.ElementAt(0).Value.pennies)
                             {
-                                Console.WriteLine("Sorry you don't have enough money on this account\n");
-                                Console.Write("\nEnter amount" + currency + "to transfer: ");
+                                Console.WriteLine("Sorry you don't have enough " + currency + " or " + currency2 + " on this account\n");
+                                Console.Write("\nEnter amount " + currency + " to transfer: ");
                                 crownsAmount = Console.ReadLine();
-                                Console.Write("\nEnter amount" + currency2 + "to transfer: ");
+                                Console.Write("\nEnter amount " + currency2 + " to transfer: ");
                                 penniesAmount = Console.ReadLine();
                             }
                             else
@@ -641,7 +641,7 @@ namespace Banken
                     }
                 }
 
-                //Kollar om man skrivit in rätt konto att överföra FRÅN
+                // Kollar om man skrivit in rätt konto att överföra FRÅN
                 void withdrawFrom(Dictionary<string, (int crowns, int pennies)> chosenaccounts, string username, string password)
                 {
                     Dictionary<string, (int crowns, int pennies)> fromAccount = new Dictionary<string, (int, int)>();
@@ -670,7 +670,7 @@ namespace Banken
                         }
                         if (tCorrect == false)
                         {
-                            Console.Write("Sorry, please enter one of your registered accounts to withdraw from: ");
+                            Console.Write("Sorry, please enter the FULL name of one of your registered accounts to withdraw from: ");
                             accountSelector = 0;
                             input = Console.ReadLine();
                         }
@@ -694,13 +694,15 @@ namespace Banken
                         if (int.TryParse(crownsAmount, out int crowns) && int.TryParse(penniesAmount, out int pennies) && input == password)
                         {
                             // Kollar om man har tillräckligt med pengar på kontot man överför FRÅN
-                            if (crowns > fromaccount.ElementAt(0).Value.crowns && pennies > fromaccount.ElementAt(0).Value.pennies)
+                            if (crowns > fromaccount.ElementAt(0).Value.crowns || pennies > fromaccount.ElementAt(0).Value.pennies)
                             {
-                                Console.WriteLine("Sorry you don't have enough money on this account\n");
-                                Console.Write("\nEnter amount" + currency + "to withdraw: ");
+                                Console.WriteLine("Sorry you don't have enough " + currency + " or " + currency2 + " on this account\n");
+                                Console.Write("\nEnter amount " + currency + " to withdraw: ");
                                 crownsAmount = Console.ReadLine();
-                                Console.Write("\nEnter amount" + currency2 + "to withdraw: ");
+                                Console.Write("\nEnter amount " + currency2 + " to withdraw: ");
                                 penniesAmount = Console.ReadLine();
+                                Console.Write("\nEnter your PIN code: ");
+                                input = Console.ReadLine();
                             }
                             else
                             {
