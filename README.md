@@ -1,1 +1,3 @@
-# Banken (work in progress)
+# Banken
+
+A simple bank app written with C#.
