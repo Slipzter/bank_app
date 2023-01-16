@@ -7,7 +7,7 @@ Simple bank app created with C#
 ## General info
 The application comes with 5 existing users (Greek gods) which all have different accounts with different balances.  
 You can login to any of those users and set a PIN code which will be saved for the current run of the appliction.  
-At the main menu, you can choose to either: 
+At the main menu, you can choose to: 
 * [View accounts and account balance](#view-accounts-and-account-balance)  
 * [Transfer between accounts](#transfer-between-accounts)  
 * [Withdraw](#withdraw)  
